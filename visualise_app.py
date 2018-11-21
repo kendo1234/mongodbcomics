@@ -3,6 +3,8 @@ from flask import Flask, render_template
 from flask import request, jsonify
 import json
 import ast
+import imp
+from bson.json_util import dumps
 
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'Physical_Comics'  # name of database on mongo
@@ -18,8 +20,6 @@ def welcome():
 
 @app.route('/marvel', methods=['GET'])
 def get_marvel_comics():
-    # TODO create a page that gets the contents of the marvel collection
-
     m_comics = mongo.db.marvel
     output = []
     for m in marvel.find():
@@ -27,24 +27,13 @@ def get_marvel_comics():
     return jsonify({'result': output})
 
 
-@app.route('/marvel/', methods=['GET'])
-def get_writer(name):
-    marvel_writer = mongo.db.marvel
-    n = marvel_writer.find_one({'name': name})
-    if n:
-        output = {'title': n['title'], 'writer': n['writer'], 'artist': n['artist']}
-    else:
-        output = "No such name"
-    return jsonify({'result': output})
-
-
 @app.route("/marvel/create", methods=['POST'])
 def create_book():
     """
-       Function to create new users.
+       Function to create new books.
        """
     try:
-        # Create new users
+        # Create new book/s
         try:
             body = ast.literal_eval(json.dumps(request.get_json()))
         except:
