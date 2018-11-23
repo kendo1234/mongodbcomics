@@ -1,16 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Flask Intro</title>
+    <title>Comic Books</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
     <div class="container">
-      <h1>Comic Book Collection</h2>
-      <br>
-      <p>Click <a href="/">here</a> to go home.</p>
+      <h1>Ken's Lame Comic Thing</h2>
+      <div class="row">
+        <form>
+          <div class="form-group">
+            <label for="comicTitle">Title</label>
+            <input type="text" class="form-control" id="comicTitle" name="title" placeholder="Title">
+          </div>
+          <div class="form-group">
+            <label for="comicWriter">Writer</label>
+            <input type="text" class="form-control" id="comicWriter" name="writer" placeholder="Writer">
+          </div>
+          <div class="form-group">
+            <label for="comicArtist">Artist</label>
+            <input type="text" class="form-control" id="comicArtist" name="artist" placeholder="Artist">
+          </div>
+          <button type="button" class="btn btn-primary" onclick="send()">Add</button>
+        </form>
+      </div>
+      <div class="row">
+        <p id="target"></p>
+      </div>
     </div>
+
+    <script type="text/javascript">
+      function send() {
+          var comic = {
+              title: $("#comicTitle").val(),
+              writer:$("#comicWriter").val(),
+              artist:$("#comicArtist").val()
+          }
+    
+          $.ajax({
+              url: '/marvel/create',
+              type: 'post',
+              dataType: 'json',
+              contentType: 'application/json',
+              success: function (data) {
+                  alert("Added Stuff")
+              },
+              data: JSON.stringify(comic)
+          });
+      }
+  </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 </html>
