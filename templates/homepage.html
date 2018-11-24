@@ -9,26 +9,36 @@
   </head>
   <body>
     <div class="container">
-      <h1>Ken's Lame Comic Thing</h2>
+      <h1>Ken's Lame Comic Thing</h1>
       <div class="row">
-        <form>
-          <div class="form-group">
-            <label for="comicTitle">Title</label>
+        <form class="form-inline">
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicTitle">Title</label>
             <input type="text" class="form-control" id="comicTitle" name="title" placeholder="Title">
           </div>
-          <div class="form-group">
-            <label for="comicWriter">Writer</label>
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicWriter">Writer</label>
             <input type="text" class="form-control" id="comicWriter" name="writer" placeholder="Writer">
           </div>
-          <div class="form-group">
-            <label for="comicArtist">Artist</label>
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicArtist">Artist</label>
             <input type="text" class="form-control" id="comicArtist" name="artist" placeholder="Artist">
           </div>
-          <button type="button" class="btn btn-primary" onclick="send()">Add</button>
+          <button type="button" class="btn btn-primary mb-2" onclick="send()">Add</button>
         </form>
       </div>
       <div class="row">
-        <p id="target"></p>
+        <button type="button" class="btn btn-primary" onclick="stockShelf()">Poof</button>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Writer</th>
+              <th scope="col">Artist</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
 
@@ -51,8 +61,18 @@
               data: JSON.stringify(comic)
           });
       }
-  </script>
 
+      function stockShelf() {
+        $.getJSON( "marvel", function( i, book ) {
+          console.log("Success")
+        })
+        .done(function( data ) {
+          $.each( data.items, function( i, item ) {
+            console.log(item)
+          })
+        })
+      }
+  </script>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
