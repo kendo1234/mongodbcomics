@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Ken's Lame Comic Thing</h2>
+      <h1>Add A Comic Book</h1>
       <div class="row">
         <form>
           <div class="form-group">
@@ -23,6 +23,10 @@
           <div class="form-group">
             <label for="comicArtist">Artist</label>
             <input type="text" class="form-control" id="comicArtist" name="artist" placeholder="Artist">
+          </div>
+          <div class="form-group">
+            <label for="comicLabel">Label</label>
+            <input type="text" class="form-control" id="comicLabel" name="Label" placeholder="Label">
           </div>
           <button type="button" class="btn btn-primary" onclick="send()">Add</button>
         </form>
@@ -38,15 +42,18 @@
               title: $("#comicTitle").val(),
               writer:$("#comicWriter").val(),
               artist:$("#comicArtist").val()
+              Label:$("#comicLabel").val()
+
+
           }
     
           $.ajax({
-              url: '/marvel/create',
+              url: '/books/create',
               type: 'post',
               dataType: 'json',
               contentType: 'application/json',
               success: function (data) {
-                  alert("Added Stuff")
+                  alert("Added comic, keep reading :)")
               },
               data: JSON.stringify(comic)
           });
