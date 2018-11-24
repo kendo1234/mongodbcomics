@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Ken's Lame Comic Thing</h1>
+      <h1>Comic Thing</h1>
       <div class="row">
         <form class="form-inline">
           <div class="form-group mb-2 mr-sm-2">
@@ -34,7 +34,6 @@
         </form>
       </div>
       <div class="row">
-        <button type="button" class="btn btn-primary" onclick="stockShelf()">Poof</button>
         <table class="table" id="bookShelf">
           <thead>
             <tr>
@@ -69,7 +68,7 @@
           });
       }
 
-      function stockShelf() {
+      window.onload = function stockShelf() {
         $.getJSON( "books", function( data ) {
           var books = [];
           console.log(data)
