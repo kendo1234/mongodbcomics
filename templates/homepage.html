@@ -24,7 +24,13 @@
             <label class="sr-only" for="comicArtist">Artist</label>
             <input type="text" class="form-control" id="comicArtist" name="artist" placeholder="Artist">
           </div>
-          <button type="button" class="btn btn-primary mb-2" onclick="send()">Add</button>
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicLabel">Label</label>
+            <input type="text" class="form-control" id="comicLabel" name="label" placeholder="Label">
+          </div>
+          <div class="form-group mb-2 mr-sm-2">
+            <button type="button" class="btn btn-primary" onclick="send()">Add</button>
+          </div>
         </form>
       </div>
       <div class="row">
@@ -35,6 +41,7 @@
               <th scope="col">Title</th>
               <th scope="col">Writer</th>
               <th scope="col">Artist</th>
+              <th scope="col">Label</th>
             </tr>
           </thead>
         </table>
@@ -46,27 +53,28 @@
           var comic = {
               title: $("#comicTitle").val(),
               writer:$("#comicWriter").val(),
-              artist:$("#comicArtist").val()
+              artist:$("#comicArtist").val(),
+              label:$("#comicLabel").val()
           }
     
           $.ajax({
-              url: '/marvel/create',
+              url: '/books/create',
               type: 'post',
               dataType: 'json',
               contentType: 'application/json',
               success: function (data) {
-                  alert("Added Stuff")
+                  alert("Added comic, keep reading :)")
               },
               data: JSON.stringify(comic)
           });
       }
 
       function stockShelf() {
-        $.getJSON( "marvel", function( data ) {
+        $.getJSON( "books", function( data ) {
           var books = [];
           console.log(data)
           $.each(data.result, function(i,book){
-            books.push("<tr><td>" + book.title + "</td><td>" + book.writer + "</td><td>" + book.artist + "</td></tr>")
+            books.push("<tr><td>" + book.title + "</td><td>" + book.writer + "</td><td>" + book.artist + "</td><td>" + book.label + "</td></tr>")
           })
 
           $( "<tbody/>", {

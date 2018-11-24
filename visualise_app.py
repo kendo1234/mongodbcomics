@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['MONGO_DBNAME'] = 'Physical_Comics'  # name of database on mongo
 app.config["MONGO_URI"] = "mongodb://localhost:27017/Physical_Comics"
 mongo = PyMongo(app)
-marvel = mongo.db.marvel
+books = mongo.db.books
 
 
 @app.route('/')
@@ -18,16 +18,16 @@ def welcome():
     return render_template('homepage.html')
 
 
-@app.route('/marvel', methods=['GET'])
-def get_marvel_comics():
-    m_comics = mongo.db.marvel
+@app.route('/books', methods=['GET'])
+def get_books():
+    comics = mongo.db.books
     output = []
-    for m in marvel.find():
-        output.append({'title': m['title'], 'writer': m['writer'], 'artist': m['artist']})
+    for m in books.find():
+        output.append({'title': m['title'], 'writer': m['writer'], 'artist': m['artist'], 'label': m['label']})
     return jsonify({'result': output})
 
 
-@app.route("/marvel/create", methods=['POST'])
+@app.route("/books/create", methods=['POST'])
 def create_book():
     """
        Function to create new books.
@@ -41,7 +41,7 @@ def create_book():
             # Add message for debugging purpose
             return "", 400
 
-        record_created = marvel.insert(body)
+        record_created = books.insert(body)
 
         # Prepare the response
         if isinstance(record_created, list):
