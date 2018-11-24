@@ -9,30 +9,42 @@
   </head>
   <body>
     <div class="container">
-      <h1>Add A Comic Book</h1>
+      <h1>Ken's Lame Comic Thing</h1>
       <div class="row">
-        <form>
-          <div class="form-group">
-            <label for="comicTitle">Title</label>
+        <form class="form-inline">
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicTitle">Title</label>
             <input type="text" class="form-control" id="comicTitle" name="title" placeholder="Title">
           </div>
-          <div class="form-group">
-            <label for="comicWriter">Writer</label>
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicWriter">Writer</label>
             <input type="text" class="form-control" id="comicWriter" name="writer" placeholder="Writer">
           </div>
-          <div class="form-group">
-            <label for="comicArtist">Artist</label>
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicArtist">Artist</label>
             <input type="text" class="form-control" id="comicArtist" name="artist" placeholder="Artist">
           </div>
-          <div class="form-group">
-            <label for="comicLabel">Label</label>
-            <input type="text" class="form-control" id="comicLabel" name="Label" placeholder="Label">
+          <div class="form-group mb-2 mr-sm-2">
+            <label class="sr-only" for="comicLabel">Label</label>
+            <input type="text" class="form-control" id="comicLabel" name="label" placeholder="Label">
           </div>
-          <button type="button" class="btn btn-primary" onclick="send()">Add</button>
+          <div class="form-group mb-2 mr-sm-2">
+            <button type="button" class="btn btn-primary" onclick="send()">Add</button>
+          </div>
         </form>
       </div>
       <div class="row">
-        <p id="target"></p>
+        <button type="button" class="btn btn-primary" onclick="stockShelf()">Poof</button>
+        <table class="table" id="bookShelf">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Writer</th>
+              <th scope="col">Artist</th>
+              <th scope="col">Label</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
 
@@ -41,10 +53,8 @@
           var comic = {
               title: $("#comicTitle").val(),
               writer:$("#comicWriter").val(),
-              artist:$("#comicArtist").val()
-              Label:$("#comicLabel").val()
-
-
+              artist:$("#comicArtist").val(),
+              label:$("#comicLabel").val()
           }
     
           $.ajax({
@@ -58,8 +68,21 @@
               data: JSON.stringify(comic)
           });
       }
-  </script>
 
+      function stockShelf() {
+        $.getJSON( "books", function( data ) {
+          var books = [];
+          console.log(data)
+          $.each(data.result, function(i,book){
+            books.push("<tr><td>" + book.title + "</td><td>" + book.writer + "</td><td>" + book.artist + "</td><td>" + book.label + "</td></tr>")
+          })
+
+          $( "<tbody/>", {
+            html: books.join("")
+          }).appendTo( "#bookShelf" )
+        })
+      }
+  </script>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

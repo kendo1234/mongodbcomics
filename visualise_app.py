@@ -23,7 +23,7 @@ def get_books():
     comics = mongo.db.books
     output = []
     for m in books.find():
-        output.append({'title': m['title'], 'writer': m['writer'], 'artist': m['artist'], 'Label': m['Label']})
+        output.append({'title': m['title'], 'writer': m['writer'], 'artist': m['artist'], 'label': m['label']})
     return jsonify({'result': output})
 
 
