@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <button type="button" class="btn btn-primary" onclick="stockShelf()">Poof</button>
-        <table class="table">
+        <table class="table" id="bookShelf">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -37,7 +37,6 @@
               <th scope="col">Artist</th>
             </tr>
           </thead>
-          <tbody></tbody>
         </table>
       </div>
     </div>
@@ -63,13 +62,16 @@
       }
 
       function stockShelf() {
-        $.getJSON( "marvel", function( i, book ) {
-          console.log("Success")
-        })
-        .done(function( data ) {
-          $.each( data.items, function( i, item ) {
-            console.log(item)
+        $.getJSON( "marvel", function( data ) {
+          var books = [];
+          console.log(data)
+          $.each(data.result, function(i,book){
+            books.push("<tr><td>" + book.title + "</td><td>" + book.writer + "</td><td>" + book.artist + "</td></tr>")
           })
+
+          $( "<tbody/>", {
+            html: books.join("")
+          }).appendTo( "#bookShelf" )
         })
       }
   </script>
