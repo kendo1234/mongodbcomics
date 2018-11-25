@@ -22,7 +22,7 @@ def welcome():
 def get_books():
     comics = mongo.db.books
     output = []
-    for m in books.find():
+    for m in books.find().sort('title'):
         output.append({'title': m['title'], 'writer': m['writer'], 'artist': m['artist'], 'label': m['label']})
     return jsonify({'result': output})
 
