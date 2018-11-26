@@ -56,6 +56,28 @@ def create_book():
         return "", 500
 
 
+@app.route("/books/delete/<title>", methods=['DELETE'])
+def remove_user(title):
+    """
+       Function to remove a book by title
+       """
+    try:
+        # Delete the user
+        delete_book = books.delete_one({"title": str(title)})
+
+        if delete_book.deleted_count > 0 :
+            # Prepare the response
+            return "", 204
+        else:
+            # Resource Not found
+            return "", 404
+    except:
+        # Error while trying to delete the resource
+        # Add message for debugging purpose
+        return "", 500
+
+
+
 # start the server with the 'run()' method
 if __name__ == '__main__':
     app.run(debug=True)
