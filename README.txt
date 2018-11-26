@@ -2,8 +2,9 @@ Example create body =
 
 [
 {
-     "title":"Miles Morales: The Ultimate Spiderman",
-     "writer": "Brian Michael Bendis",
-     "artist": "Artist I Cant Remember"
+     "title":"Hellboy Omnibus 4: Hellboy In Hell",
+     "writer": "Mike Mignola",
+     "artist": "Mike Mignola"
+     "label": "Dark Horse"
  }
 ]
